@@ -1,0 +1,100 @@
+import flixel.FlxSprite;
+import flixel.math.FlxPoint;
+import flixel.FlxObject;
+import flixel.addons.effects.FlxSkewedSprite;
+import objects.DeltaTrail;
+
+class Maze extends BaseStage
+{
+
+	var zardyTrail:DeltaTrail;
+
+	var corn:FlxSkewedSprite;
+	var cornBack:FlxSkewedSprite;
+
+	var cornTime:Float = 0;
+
+	var SKEW_MAX = 5;
+	var SKEW_MIN = -5;
+	var SKEW_FREQ = 6;
+
+    public function new(){
+        super();
+        
+        name = 'maze';
+        startingZoom = 0.7;
+
+		var sky = new FlxSprite(-461, -301).loadGraphic(Paths.image("zardy/stage/sky"));
+		sky.antialiasing = true;
+		sky.scrollFactor.set(0.05, 0.525);
+		addToBackground(sky);
+
+		var clouds = new FlxSprite(-506, -180).loadGraphic(Paths.image("zardy/stage/clouds"));
+		clouds.antialiasing = true;
+		clouds.scrollFactor.set(0.15, 0.575);
+		addToBackground(clouds);
+
+		var cornBlock = new FlxSprite(-471, 438).loadGraphic(Paths.image("zardy/stage/cornBlock"));
+		cornBlock.antialiasing = true;
+		cornBlock.scrollFactor.set(0.4, 0.7);
+		addToBackground(cornBlock);
+
+		cornBack = new FlxSkewedSprite(-661, 199);
+		cornBack.loadGraphic(Paths.image("zardy/stage/cornBack"));
+		cornBack.antialiasing = true;
+		cornBack.scrollFactor.set(0.4, 0.7);
+		cornBack.origin.set(0, cornBack.height);
+		addToBackground(cornBack);
+
+		corn = new FlxSkewedSprite(-669, 212);
+		corn.loadGraphic(Paths.image("zardy/stage/corn"));
+		corn.antialiasing = true;
+		corn.scrollFactor.set(0.7, 0.85);
+		corn.origin.set(0, corn.height);
+		addToBackground(corn);
+
+		var fence = new FlxSprite(-632, 455).loadGraphic(Paths.image("zardy/stage/fence"));
+		fence.antialiasing = true;
+		fence.scrollFactor.set(0.9, 0.95);
+		addToBackground(fence);
+
+		var grass = new FlxSprite(-691, 629).loadGraphic(Paths.image("zardy/stage/grass"));
+		grass.antialiasing = true;
+		addToBackground(grass);
+
+		var sign = new FlxSprite(1346, 401).loadGraphic(Paths.image("zardy/stage/sign"));
+		sign.antialiasing = true;
+		addToBackground(sign);
+
+		zardyTrail = new DeltaTrail(dad.getSprite(), null, 8, 1 / 48, 0.25);
+		zardyTrail.visible = false;
+		addToMiddle(zardyTrail);
+
+		useStartPoints = false;
+
+		dad.x -= 200;
+		dad.y += 220;
+
+		boyfriend.x += 150;
+		boyfriend.y += 140;
+
+		gf.scrollFactor.set(1, 1);
+		gf.y += 140;
+
+		bfCameraOffset.set(0, -60);
+
+		addEvent("toggleTrail", toggleTrail);
+    }
+
+	public override function update(elapsed:Float){
+		cornTime += elapsed;
+		var skewFactor = Math.cos(cornTime / SKEW_FREQ * Math.PI) / 2 + 0.5;
+		var skewFactorBack = (Math.cos(cornTime / (SKEW_FREQ * 1.4346) * Math.PI) / 2 + 0.5) - 1;
+		corn.skew.x = SKEW_MIN + skewFactor * (SKEW_MAX - SKEW_MIN);
+		cornBack.skew.x = (SKEW_MIN/1.1) + skewFactorBack * ((SKEW_MAX/1.1) - (SKEW_MIN/1.1));
+	}
+
+	public function toggleTrail(tag:String){
+		zardyTrail.visible = !zardyTrail.visible;
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"title":"Foolhardy (2023)",
+	"description":"A port of Foolhardy (2023) from Halloween Mod 2 to a standalone FPS Plus mod. This is an example mod for FPS Plus.",
+	"homepage": "https://github.com/ThatRozebudDude/FPS-Plus-Public",
+	"contributors": [
+		{
+			"name": "Rozebud",
+			"role": "Developer"
+		}
+	],
+	"api_version": "1.0.0",
+	"mod_version": "1.0.0",
+	"license": ""
+}

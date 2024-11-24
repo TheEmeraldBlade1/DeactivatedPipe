@@ -1,0 +1,23 @@
+import characters.CharacterInfoBase;
+
+class Zardy extends CharacterInfoBase
+{
+
+    public function new(){
+        super();
+
+        info.name = "zardy";
+        info.spritePath = "zardy/zardy";
+        info.frameLoadType = setSparrow();
+        
+        info.iconName = "zardy";
+        info.healthColor = 0xFF3D2F48;
+
+        addByPrefix('idle', offset(), "Idle", 24, loop(false));
+	    addByPrefix('singUP', offset(89, 102), "Sing Up", 24, loop(false));
+	    addByPrefix('singDOWN', offset(35, -33), "Sing Down", 24, loop(false));
+	    addByPrefix('singLEFT', offset(146, 55), 'Sing Left', 24, loop(false));
+	    addByPrefix('singRIGHT', offset(95, -11), 'Sing Right', 24, loop(false));
+    }
+
+}
