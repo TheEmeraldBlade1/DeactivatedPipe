@@ -143,13 +143,13 @@ class Highscore
 
 	public static function calculateRank(scoreData:ScoreStats):Rank{
 
-		var totalNotes = scoreData.kuttyCount + scoreData.epicCount + scoreData.sickCount + scoreData.goodCount + scoreData.badCount + scoreData.shitCount + scoreData.missCount;
+		var totalNotes = scoreData.perfectCount + scoreData.kuttyCount + scoreData.epicCount + scoreData.sickCount + scoreData.goodCount + scoreData.badCount + scoreData.shitCount + scoreData.missCount;
 
 		if(totalNotes <= 0) return loss;
-		else if (scoreData.sickCount == totalNotes || scoreData.epicCount == totalNotes || scoreData.kuttyCount == totalNotes) return gold;
+		else if (scoreData.sickCount == totalNotes || scoreData.epicCount == totalNotes || scoreData.kuttyCount == totalNotes || scoreData.perfectCount == totalNotes) return gold;
 
 		
-		var grade = (scoreData.kuttyCount + scoreData.epicCount + scoreData.sickCount + scoreData.goodCount) / totalNotes;
+		var grade = (scoreData.perfectCount + scoreData.kuttyCount + scoreData.epicCount + scoreData.sickCount) / totalNotes;
 	  
 		if(grade == 1){
 			return perfect;

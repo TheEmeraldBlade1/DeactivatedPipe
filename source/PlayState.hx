@@ -279,6 +279,7 @@ class PlayState extends MusicBeatState
 		score: 0,
 		highestCombo: 0,
 		accuracy: 0.0,
+		perfectCount: 0,
 		kuttyCount: 0,
 		epicCount: 0,
 		sickCount: 0,
@@ -294,6 +295,7 @@ class PlayState extends MusicBeatState
 		score: -1,
 		highestCombo: 0,
 		accuracy: 0.0,
+		perfectCount: 0,
 		kuttyCount: 0,
 		epicCount: 0,
 		sickCount: 0,
@@ -309,6 +311,7 @@ class PlayState extends MusicBeatState
 		score: 0,
 		highestCombo: 0,
 		accuracy: 0.0,
+		perfectCount: 0,
 		kuttyCount: 0,
 		epicCount: 0,
 		sickCount: 0,
@@ -958,8 +961,8 @@ class PlayState extends MusicBeatState
 	}
 
 	public function updateAccuracy(){
-		var total:Float = (songStats.kuttyCount) + (songStats.epicCount) + (songStats.sickCount) + (songStats.goodCount) + (songStats.badCount) + (songStats.shitCount) + (songStats.missCount);
-		songStats.accuracy = total == 0 ? 0 : (((songStats.kuttyCount + songStats.epicCount + songStats.sickCount + songStats.goodCount) / total) * 100);
+		var total:Float = (songStats.perfectCount) + (songStats.kuttyCount) + (songStats.epicCount) + (songStats.sickCount) + (songStats.goodCount) + (songStats.badCount) + (songStats.shitCount) + (songStats.missCount);
+		songStats.accuracy = total == 0 ? 0 : (((songStats.perfectCount + songStats.kuttyCount + songStats.epicCount + songStats.sickCount) / total) * 100);
 		if (songStats.missCount >= 1){
 			songStats.accuracy = Utils.clamp(songStats.accuracy, 0, 99);
 		}else{
@@ -2165,9 +2168,9 @@ class PlayState extends MusicBeatState
 
 		if (autoplay)
 		{
-			rating = "kutty";
-			health += Scoring.KUTTY_HEAL_AMOUNT * Config.healthMultiplier * noHealMultiply;
-			songStats.kuttyCount++;
+			rating = "perfect";
+			health += Scoring.PERFECT_HEAL_AMOUNT * Config.healthMultiplier * noHealMultiply;
+			songStats.perfectCount++;
 			{
 				if(Config.noteSplashType >= 1 && Config.noteSplashType < 4){
 					createNoteSplash(note.noteData);
@@ -2194,6 +2197,14 @@ class PlayState extends MusicBeatState
 				comboBreak();
 			}else{
 				switch(rating){
+					case "perfect":
+						health += Scoring.PERFECT_HEAL_AMOUNT * Config.healthMultiplier * noHealMultiply;
+						songStats.perfectCount++;
+						{
+							if(Config.noteSplashType >= 1 && Config.noteSplashType < 4){
+								createNoteSplash(note.noteData);
+							}
+						}
 					case "kutty":
 						health += Scoring.KUTTY_HEAL_AMOUNT * Config.healthMultiplier * noHealMultiply;
 						songStats.kuttyCount++;
@@ -3214,6 +3225,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('misses', FlxStringUtil.formatMoney(songStats.missCount, false, true));
 		setOnLuas('comboBreaks', FlxStringUtil.formatMoney(songStats.comboBreakCount, false, true));
 		setOnLuas('accuracy', truncateFloat(songStats.accuracy, 2));
+		setOnLuas('perfects', FlxStringUtil.formatMoney(songStats.perfectCount, false, true));
 		setOnLuas('kuttys', FlxStringUtil.formatMoney(songStats.kuttyCount, false, true));
 		setOnLuas('epics', FlxStringUtil.formatMoney(songStats.epicCount, false, true));
 		setOnLuas('sicks', FlxStringUtil.formatMoney(songStats.sickCount, false, true));
@@ -3317,6 +3329,7 @@ typedef ScoreStats = {
 	score:Int,
 	highestCombo:Int,
 	accuracy:Float,
+	perfectCount:Int,
 	kuttyCount:Int,
 	epicCount:Int,
 	sickCount:Int,

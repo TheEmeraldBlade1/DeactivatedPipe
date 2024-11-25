@@ -42,6 +42,7 @@ class CharacterSelectState extends MusicBeatState
     var characterGroup:FlxSpriteGroup= new FlxSpriteGroup();
 
     var startLeaving:Bool = false;
+    var blockingSelection:Bool = false;
     var canAccept:Bool = false;
     var canReverse:Bool = false;
     var reverseTime:Float = 0;
@@ -114,6 +115,9 @@ class CharacterSelectState extends MusicBeatState
                 var charJson = Json.parse(Utils.getText(Paths.json(file.split(".json")[0], "data/characterSelect")));
                 if (charJson.id == null){ charJson.id = file.split(".json")[0].toLowerCase(); }
                 var charPos = charJson.position;
+
+                if(charPos[0] >= 3){ charPos[0] = 0; }
+                if(charPos[1] >= 3){ charPos[1] = 0; }
 
                 var repositionCharacter:Bool = false;
 
@@ -275,7 +279,7 @@ class CharacterSelectState extends MusicBeatState
         FlxTween.tween(characterGrid, {y: characterGrid.y - 230}, 1, {ease: FlxEase.expoOut});
         add(characterGrid);
 
-        curGridPosition = characters.get(persistentCharacter).position;
+        curGridPosition = characters.get(persistentCharacter).position.copy();
         changeGridPos([0, 0], true);
 
         changeCharacter(persistentCharacter, true);
@@ -378,6 +382,31 @@ class CharacterSelectState extends MusicBeatState
                     characterGrid.showNormalCursor();
                 }
             });
+        }
+
+        for (row in characterGrid.grid) {
+            for (sprite in row) {
+                // If mouse overlaps the sprite
+                if (FlxG.mouse.overlaps(sprite)) {
+                    var rowIndex = characterGrid.grid.indexOf(row);
+                    var colIndex = row.indexOf(sprite);
+                    
+                    // Create an Array<Int> for position
+                    var position = [rowIndex, colIndex];
+                    
+                    // Now pass the Array<Int> to the functions that expect it
+                    changeGridPos(position);
+                    changeCharacter(getCharacterFromPosition(position));
+                    characterGrid.showNormalCursor();
+                    characterGrid.select(position);
+                    //playCursorMoveSound();
+                    //Cursor.createPointer();
+                }
+                else
+                {
+                    //Cursor.createDefault();
+                }
+            }
         }
 
         if(Binds.justPressed("menuBack") && canReverse){
@@ -516,6 +545,9 @@ class CharacterSelectState extends MusicBeatState
         return characterPositions.exists((""+position[0]) + ("|"+position[1]));
     }
 
+    var initialPlayerTimer:FlxTimer;
+    var initialPartnerTimer:FlxTimer;
+
     function changeCharacter(changeCharacter:String, ?initial:Bool = false):Void{
         if(changeCharacter == null){ changeCharacter = "locked"; }
 
@@ -525,9 +557,12 @@ class CharacterSelectState extends MusicBeatState
         var leavingCharacter = curCharacter;
         curCharacter = changeCharacter;
 
+        if(initialPlayerTimer != null){ initialPlayerTimer.destroy(); }
+        if(initialPartnerTimer != null){ initialPartnerTimer.destroy(); }
+
         if(characters.get(curCharacter).player != null){
             if(initial){
-                new FlxTimer().start(0.2, function(t){
+                initialPlayerTimer = new FlxTimer().start(0.2, function(t){
                     characters.get(curCharacter).player.playEnter();
                     characterGroup.add(characters.get(curCharacter).player);
                 });
@@ -539,7 +574,7 @@ class CharacterSelectState extends MusicBeatState
         }
         if(characters.get(curCharacter).partner != null){
             if(initial){
-                new FlxTimer().start(0.2, function(t){
+                initialPartnerTimer = new FlxTimer().start(0.2, function(t){
                     characters.get(curCharacter).partner.playEnter();
                     characterGroup.add(characters.get(curCharacter).partner);
                 });

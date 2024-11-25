@@ -87,7 +87,6 @@ class Config
 		showMisses = FlxG.save.data.showMisses;
 		enableVariations = FlxG.save.data.enableVariations;
 		autoPause = FlxG.save.data.autoPause;
-
 		ee1 = FlxG.save.data.ee1;
 		ee2 = FlxG.save.data.ee2;
 	}

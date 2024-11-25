@@ -22,7 +22,7 @@ class ComboPopup extends FlxSpriteGroup
 
 	public var limitSprites:Bool = false;
 
-	static final ratingList = ["kutty", "epic", "sick", "good", "bad", "shit", "miss"];
+	static final ratingList = ["perfect", "kutty", "epic", "sick", "good", "bad", "shit", "miss"];
 
 	public function new(_x:Float, _y:Float, _ratingInfo:PopupInfo, _numberInfo:PopupInfo, _comboBreakInfo:PopupInfo)
 	{

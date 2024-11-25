@@ -15,6 +15,7 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import cursor.Cursor;
 
 using StringTools;
 
@@ -62,6 +63,8 @@ class AnimationDebug extends FlxState
 	{
 
 		Config.setFramerate(144);
+
+		new Cursor();
 
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -151,44 +154,84 @@ class AnimationDebug extends FlxState
 	{
 		textAnim.text = dad.curAnim;
 
-		if (FlxG.keys.pressed.E)
-			FlxG.camera.zoom += zoomSpeed * FlxG.camera.zoom;
-		if (FlxG.keys.pressed.Q)
-			FlxG.camera.zoom -= zoomSpeed * FlxG.camera.zoom;
+
+		updateTexts();
+		genBoyOffsets(false);
+
+		if (FlxG.mouse.wheel != 0)
+			FlxG.camera.zoom += 0.1 * FlxG.mouse.wheel;
 
 		if(FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.C){
 			copyOffsetToClipboard();
 		}
 
 		if (FlxG.keys.pressed.I || FlxG.keys.pressed.J || FlxG.keys.pressed.K || FlxG.keys.pressed.L)
-		{
-			if (FlxG.keys.pressed.I)
-				camFollow.velocity.y = -1 * moveSpeed / FlxG.camera.zoom;
-			else if (FlxG.keys.pressed.K)
-				camFollow.velocity.y = moveSpeed / FlxG.camera.zoom;
+			{
+				if (FlxG.keys.pressed.I)
+					camFollow.velocity.y = -190;
+				else if (FlxG.keys.pressed.K)
+					camFollow.velocity.y = 190;
+				else
+					camFollow.velocity.y = 0;
+	
+				if (FlxG.keys.pressed.J)
+					camFollow.velocity.x = -190;
+				else if (FlxG.keys.pressed.L)
+					camFollow.velocity.x = 190;
+				else
+					camFollow.velocity.x = 0;
+			}
 			else
-				camFollow.velocity.y = 0;
+			{
+				camFollow.velocity.set();
+			}
+	
+			if (FlxG.keys.justPressed.W)
+			{
+				dad.playAnim('singUP');
+			}
+	
+			if (FlxG.keys.justPressed.S)
+			{
+				dad.playAnim('singDOWN');
+			}
+	
+			if (FlxG.keys.justPressed.A)
+			{
+				dad.playAnim('singLEFT');
+			}
+	
+			if (FlxG.keys.justPressed.D)
+			{
+				dad.playAnim('singRIGHT');
+			}
+	
+			if (FlxG.keys.justPressed.SPACE)
+			{
+				dad.playAnim('idle');
+			}
+	
+	
+			if (FlxG.keys.justPressed.F)
+			{
+				dad.flipX = !dad.flipX;
+				dadBG.flipX = !dadBG.flipX;
+			}
 
-			if (FlxG.keys.pressed.J)
-				camFollow.velocity.x = -1 * moveSpeed / FlxG.camera.zoom;
-			else if (FlxG.keys.pressed.L)
-				camFollow.velocity.x = moveSpeed / FlxG.camera.zoom;
-			else
-				camFollow.velocity.x = 0;
-		}
-		else
-		{
-			camFollow.velocity.set();
-		}
-
-		if (FlxG.keys.justPressed.W)
+		if (FlxG.keys.justPressed.Q)
 		{
 			curAnim -= 1;
+			updateTexts();
+			genBoyOffsets(false);
+			dad.playAnim(animList[curAnim]);
 		}
 
-		if (FlxG.keys.justPressed.S)
+		if (FlxG.keys.justPressed.E)
 		{
 			curAnim += 1;
+			updateTexts();
+			genBoyOffsets(false);
+			dad.playAnim(animList[curAnim]);
 		}
 
 		if (curAnim < 0)
@@ -197,23 +240,9 @@ class AnimationDebug extends FlxState
 		if (curAnim >= animList.length)
 			curAnim = 0;
 
-		if (FlxG.keys.justPressed.S || FlxG.keys.justPressed.W || FlxG.keys.justPressed.SPACE)
-		{
-			dad.playAnim(animList[curAnim], true);
-
-			if(bgMirrorFront){
-				if(animList[curAnim].endsWith("miss"))
-					dadBG.playAnim(animList[curAnim].substring(0, animList[curAnim].length - 4), true);
-				else
-					dadBG.idleEnd(true);
-			}
-
-			updateTexts();
-			genBoyOffsets(false);
-		}
-		
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
+			Cursor.unloadCursor();
 			FlxG.switchState(new PlayState());
 		}
 
@@ -223,7 +252,7 @@ class AnimationDebug extends FlxState
 		var leftP = FlxG.keys.anyJustPressed([LEFT]);
 
 		var holdShift = FlxG.keys.pressed.SHIFT;
-		var multiplier = 1;
+		var multiplier = 20;
 		if (holdShift)
 			multiplier = 10;
 

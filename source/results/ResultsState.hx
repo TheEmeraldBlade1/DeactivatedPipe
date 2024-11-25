@@ -100,6 +100,7 @@ class ResultsState extends FlxUIStateExt
                 score: FlxG.random.int(123456, 12345678),
                 highestCombo: FlxG.random.int(0, 999),
                 accuracy: FlxG.random.int(50, 100),
+                perfectCount: FlxG.random.int(0, 700),
                 kuttyCount: FlxG.random.int(0, 600),
                 epicCount: FlxG.random.int(0, 500),
                 sickCount: FlxG.random.int(0, 400),
@@ -117,9 +118,9 @@ class ResultsState extends FlxUIStateExt
         songNameText = _songNameText;
         useCustomStickerSet = _useCustomStickerSet;
 
-        totalNotes = scoreStats.kuttyCount + scoreStats.epicCount + scoreStats.sickCount + scoreStats.goodCount + scoreStats.badCount + scoreStats.shitCount;
+        totalNotes = scoreStats.perfectCount + scoreStats.kuttyCount + scoreStats.epicCount + scoreStats.sickCount + scoreStats.goodCount + scoreStats.badCount + scoreStats.shitCount;
         if(totalNotes + scoreStats.missCount > 0){
-            grade = (scoreStats.kuttyCount + scoreStats.epicCount + scoreStats.sickCount + scoreStats.goodCount) / (totalNotes + scoreStats.missCount);
+            grade = (scoreStats.perfectCount + scoreStats.kuttyCount + scoreStats.epicCount + scoreStats.sickCount) / (totalNotes + scoreStats.missCount);
         }
         
         rank = Highscore.calculateRank(scoreStats);
@@ -475,6 +476,7 @@ class ResultsState extends FlxUIStateExt
                         score: FlxG.random.int(123456, 12345678),
                         highestCombo: 100,
                         accuracy: 100,
+                        perfectCount: 100,
                         kuttyCount: 100,
                         epicCount: 100,
                         sickCount: 100,
@@ -491,6 +493,7 @@ class ResultsState extends FlxUIStateExt
                         score: FlxG.random.int(123456, 12345678),
                         highestCombo: 100,
                         accuracy: 100,
+                        perfectCount: 99,
                         kuttyCount: 99,
                         epicCount: 99,
                         sickCount: 99,
@@ -507,6 +510,7 @@ class ResultsState extends FlxUIStateExt
                         score: FlxG.random.int(123456, 12345678),
                         highestCombo: 90,
                         accuracy: 90,
+                        perfectCount: 90,
                         kuttyCount: 90,
                         epicCount: 90,
                         sickCount: 90,
@@ -523,6 +527,7 @@ class ResultsState extends FlxUIStateExt
                         score: FlxG.random.int(123456, 12345678),
                         highestCombo: 80,
                         accuracy: 80,
+                        perfectCount: 80,
                         kuttyCount: 80,
                         epicCount: 80,
                         sickCount: 80,
@@ -539,6 +544,7 @@ class ResultsState extends FlxUIStateExt
                         score: FlxG.random.int(123456, 12345678),
                         highestCombo: 70,
                         accuracy: 70,
+                        perfectCount: 70,
                         kuttyCount: 70,
                         epicCount: 70,
                         sickCount: 70,
@@ -555,6 +561,7 @@ class ResultsState extends FlxUIStateExt
                         score: FlxG.random.int(123456, 12345678),
                         highestCombo: 50,
                         accuracy: 50,
+                        perfectCount: 50,
                         kuttyCount: 50,
                         epicCount: 50,
                         sickCount: 50,
@@ -571,6 +578,7 @@ class ResultsState extends FlxUIStateExt
                         score: 0,
                         highestCombo: 0,
                         accuracy: 0,
+                        perfectCount: 0,
                         kuttyCount: 0,
                         epicCount: 0,
                         sickCount: 0,

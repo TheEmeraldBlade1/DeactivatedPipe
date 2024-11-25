@@ -16,6 +16,7 @@ import flixel.text.FlxText;
 import extensions.flixel.FlxUIStateExt;
 import extensions.flixel.FlxTextExt;
 import openfl.ui.Mouse;
+import cursor.Cursor;
 
 
 using StringTools;
@@ -117,6 +118,8 @@ class ConfigMenu extends FlxUIStateExt
         if(exitTo == null){
 			exitTo = MainMenuState;
 		}
+
+        new Cursor();
 
         FlxG.sound.cache(Paths.music(baseSongTrack));
         if(USE_LAYERED_MUSIC){
@@ -239,6 +242,23 @@ class ConfigMenu extends FlxUIStateExt
 
 		super.update(elapsed);
 
+        if (state != 'subMenu'){
+            for(iPart1 in topLevelMenuGroup.members)
+                {
+                    for(iPart2 in 0...options.length){
+                        if (FlxG.mouse.overlaps(titles[iPart2]) || FlxG.mouse.overlaps(icons[iPart2])){
+                            curSelected = iPart2;
+                            changeSelected(0);
+                            //Cursor.createPointer();
+                        }
+                        else
+                        {
+                            //Cursor.createDefault();
+                        }
+                    }
+                }
+        }
+
         pressUp = Binds.justPressed("menuUp");
         pressDown = Binds.justPressed("menuDown");
         pressLeft = Binds.justPressed("menuLeft");
@@ -275,10 +295,12 @@ class ConfigMenu extends FlxUIStateExt
                     }
 
                     if (pressBack){
+                        Cursor.unloadCursor();
                         exit();
                     }
 
                     else if (pressAccept || FlxG.mouse.justPressed){
+                        Cursor.unloadCursor();
                         FlxG.sound.play(Paths.sound('confirmMenu'));
                         bringTextToTop(curSelected);
                         curSelectedSub = 0;
@@ -295,6 +317,7 @@ class ConfigMenu extends FlxUIStateExt
                     }
 
                     if (pressBack){
+                        new Cursor();
                         FlxG.sound.play(Paths.sound('cancelMenu'));
                         backToCategories();
                     }

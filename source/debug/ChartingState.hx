@@ -275,7 +275,7 @@ class ChartingState extends MusicBeatState
 		leftIconBack = new FlxSprite(leftIcon.x - 2.5, leftIcon.y - 2.5).makeGraphic(75, 75, 0xFF00AAFF);
 		rightIconBack = new FlxSprite(rightIcon.x - 2.5, rightIcon.y - 2.5).makeGraphic(75, 75, 0xFF00AAFF);
 
-		var eventIcon = new FlxSprite().loadGraphic(Paths.image("chartEditor/event/genericEvent"));
+		var eventIcon = new FlxSprite().loadGraphic(Paths.image("chartEditor/EventIcon"));
 		eventIcon.setPosition(((gridBG.width / 6) * 5) - (eventIcon.width / 2), -75 + (eventIcon.width / 2));
 		//eventIcon.color = 0xFFFF0000;
 		

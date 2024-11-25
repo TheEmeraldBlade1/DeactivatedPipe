@@ -202,9 +202,11 @@ class MainMenuState extends MusicBeatState
 							curSelected = i;
 							changeItem();
 						}
+						//Cursor.createPointer();
 					}
 					else
 					{
+						//Cursor.createDefault();
 					}
 				}
 			}

@@ -22,6 +22,7 @@ class Conductor
 
 	public static var safeZoneOffset:Float = 190; // is calculated in create(), is safeFrames in milliseconds
 
+	public static var kuttyZone:Float = 5.625;
 	public static var epicZone:Float = 11.25;
 	public static var sickZone:Float = 22.5;
 	public static var goodZone:Float = 45;

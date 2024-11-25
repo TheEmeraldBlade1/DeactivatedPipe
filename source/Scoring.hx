@@ -5,6 +5,7 @@ import haxe.display.Position.Range;
 class Scoring
 {
 
+    public static final PERFECT_HEAL_AMOUNT:Float = (3 / 100) * 2;
     public static final KUTTY_HEAL_AMOUNT:Float = (2.5 / 100) * 2;
     public static final EPIC_HEAL_AMOUNT:Float = (2 / 100) * 2;
     public static final SICK_HEAL_AMOUNT:Float = (1.5 / 100) * 2;
@@ -35,7 +36,7 @@ class Scoring
         var slope = 0.080;
         var offset = 54.99;
 
-        if(rateNote(absTiming) == "kutty"){
+        if(rateNote(absTiming) == "perfect"){
             return MAX_NOTE_SCORE;
         }else if(rateNote(absTiming) == "miss"){
             return MIN_NOTE_SCORE;
@@ -48,7 +49,7 @@ class Scoring
     }
 
     public static function rateNote(msTiming:Float):String{
-        var r:String = "kutty";
+        var r:String = "perfect";
         var absTiming:Float = Math.abs(msTiming);
 
         if (absTiming > Conductor.missZone){ r = 'miss'; }
@@ -57,7 +58,8 @@ class Scoring
 		else if (absTiming > Conductor.goodZone){ r = 'good'; }
         else if (absTiming > Conductor.sickZone){ r = 'sick'; }
         else if (absTiming > Conductor.epicZone){ r = 'epic'; }
-        else { r = 'kutty'; }
+        else if (absTiming > Conductor.kuttyZone){ r = 'kutty'; }
+        else { r = 'perfect'; }
 
         return r;
     }

@@ -32,6 +32,7 @@ import flixel.util.FlxColor;
 import lime.utils.Assets;
 import flixel.text.FlxText;
 import extensions.flixel.FlxTextExt;
+import cursor.Cursor;
 
 using StringTools;
 

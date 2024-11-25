@@ -10,9 +10,8 @@ import flixel.group.FlxSpriteGroup;
 
 class CharacterGrid extends FlxSpriteGroup
 {
-
-    var grid:Array<Array<FlxSprite>> = [[]];
-    var gridArea:Int;
+    public var grid:Array<Array<FlxSprite>> = [[]];
+    public var gridArea:Int;
 
     var cursor:FlxSprite;
     var cursorBack:FlxSprite;
@@ -25,6 +24,10 @@ class CharacterGrid extends FlxSpriteGroup
     var cursorConfrim:FlxSprite;
     var cursorDeny:FlxSprite;
 
+    public var iconGrid = [];
+
+    public var testGraphic:FlxSprite;
+
     public var forceTrackPosition:Array<Int> = null;
 
     public function new(_x:Float = 0, _y:Float = 0, _width:Int, _height:Int, _characterMap:Map<String, CharacterSelectGroup>){
@@ -32,7 +35,6 @@ class CharacterGrid extends FlxSpriteGroup
 
         gridArea = _width * _height;
 
-        var iconGrid = [];
         for(i in 0..._width){
             var column = [];
             for(j in 0..._height){
@@ -86,7 +88,6 @@ class CharacterGrid extends FlxSpriteGroup
 
         for(gx in 0...iconGrid.length){
             for(gy in 0...iconGrid[gx].length){
-                var testGraphic:FlxSprite;
                 if(iconGrid[gx][gy] != ""){
                     testGraphic = new FlxSprite(40, 40);
                     testGraphic.frames = Paths.getSparrowAtlas("menu/characterSelect/characters/" + iconGrid[gx][gy] + "/icon");

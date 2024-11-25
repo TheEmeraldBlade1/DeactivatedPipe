@@ -361,6 +361,7 @@ class StoryMenuState extends MusicBeatState
 				score: 0,
 				highestCombo: 0,
 				accuracy: 0.0,
+				perfectCount: 0,
 				kuttyCount: 0,
 				epicCount: 0,
 				sickCount: 0,
