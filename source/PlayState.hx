@@ -3195,11 +3195,13 @@ class PlayState extends MusicBeatState
 		// Add Full Combo (FC) indicators based on the counts of each judgment type
 		if (songStats.missCount == 0 && songStats.highestCombo > 0) {
 		// Check for Perfect Full Combo (PFC): No Epic, Sick, Good, Bad, or Shit judgments.
-		if (songStats.epicCount == 0 && songStats.sickCount == 0 && songStats.goodCount == 0 && songStats.badCount == 0 && songStats.shitCount == 0)
+		if (songStats.kuttyCount == 0 && songStats.epicCount == 0 && songStats.sickCount == 0 && songStats.goodCount == 0 && songStats.badCount == 0 && songStats.shitCount == 0)
 			fcRating = ' [PFC]'; // Perfect Full Combo
 		// Check for Epic Full Combo (EFC): No Sick, Good, Bad, or Shit judgments.
-		else if (songStats.sickCount == 0 && songStats.goodCount == 0 && songStats.badCount == 0 && songStats.shitCount == 0)
+		else if (songStats.epicCount == 0 && songStats.sickCount == 0 && songStats.goodCount == 0 && songStats.badCount == 0 && songStats.shitCount == 0)
     		fcRating = ' [EFC]'; // Epic Full Combo
+		else if (songStats.sickCount == 0 && songStats.goodCount == 0 && songStats.badCount == 0 && songStats.shitCount == 0)
+    		fcRating = ' [FFC]'; // Fantastic Full Combo
 		// Check for Marvelous Full Combo (MFC): No Good, Bad, or Shit judgments.
 		else if (songStats.goodCount == 0 && songStats.badCount == 0 && songStats.shitCount == 0)
     		fcRating = ' [MFC]'; // Marvelous Full Combo

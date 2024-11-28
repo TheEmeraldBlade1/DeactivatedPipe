@@ -237,6 +237,41 @@ class ModManagerState extends FlxUIStateExt
                 changeModSelection(1);
                 FlxG.sound.play(Paths.sound("scrollMenu"));
             }
+
+            for (select in menuButtons)
+            {
+                for (i in 0...menuButtons.length) {
+                    if (FlxG.mouse.overlaps(menuButtons[i])){
+                        curSelectedButton = i;
+                        changeButtonSelection(0);
+                        if (FlxG.mouse.justPressed){
+                            menuButtons[curSelectedButton].press();
+                        }
+                    }
+                }
+            }
+
+            
+            for (select in modIcons)
+            {
+                for (i in 0...modIcons.length) {
+                    if (FlxG.mouse.overlaps(modIcons[i]) && curSelectedMod != i){
+                        curSelectedMod = i;
+                        changeModSelection(0);
+                    }
+                }
+            }
+
+            for (select in modNames)
+            {
+                for (i in 0...modNames.length) {
+                    if (FlxG.mouse.overlaps(modNames[i]) && curSelectedMod != i){
+                        curSelectedMod = i;
+                        changeModSelection(0);
+                    }
+                }
+            }
+
     
             if(Binds.justPressed("menuLeft")){
                 changeButtonSelection(-1);

@@ -18,7 +18,8 @@ class PicoDoppleganger extends ScriptedCutscene
         super(args);
 
         playerCigarette = FlxG.random.bool(50);
-        fuckingDie = FlxG.random.bool(8);
+        fuckingDie = FlxG.random.bool(8, 16) == 5.33333333333;
+        trace(fuckingDie);
 
         originalZoom = playstate.defaultCamZoom;
 

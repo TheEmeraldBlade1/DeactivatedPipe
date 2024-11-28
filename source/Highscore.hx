@@ -146,7 +146,7 @@ class Highscore
 		var totalNotes = scoreData.perfectCount + scoreData.kuttyCount + scoreData.epicCount + scoreData.sickCount + scoreData.goodCount + scoreData.badCount + scoreData.shitCount + scoreData.missCount;
 
 		if(totalNotes <= 0) return loss;
-		else if (scoreData.sickCount == totalNotes || scoreData.epicCount == totalNotes || scoreData.kuttyCount == totalNotes || scoreData.perfectCount == totalNotes) return gold;
+		else if (scoreData.epicCount == totalNotes || scoreData.kuttyCount == totalNotes || scoreData.perfectCount == totalNotes) return gold;
 
 		
 		var grade = (scoreData.perfectCount + scoreData.kuttyCount + scoreData.epicCount + scoreData.sickCount) / totalNotes;

@@ -1,5 +1,6 @@
 category | ALL
 category | ERECT
+category | BF MIXES
 
 
 
@@ -33,8 +34,11 @@ song | Ugh | tankman | [ALL, Week 7]
 song | Guns | tankman | [ALL, Week 7]
 song | Stress | tankman | [ALL, Week 7]
 
-song | Darnell-Bf | darnell | [ALL, Weekend 1]
-
+song | Darnell | darnell | [ALL, Weekend 1]
+song | Lit-Up | darnell | [ALL, Weekend 1]
+song | 2hot | darnell | [ALL, Weekend 1]
+song | Blazin | darnell | [ALL, Weekend 1]
+song | Darnell-Bf | darnell | [BF MIXES, Weekend 1]
 
 
 song | Bopeebo-Erect | dad | [ERECT, Week 1]

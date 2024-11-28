@@ -265,86 +265,92 @@ class PauseSubState extends MusicBeatSubstate
 
 	function startCountdown():Void
 		{
+			if (PlayState.autoplay){
+				PlayState.instance.tweenManager.active = true;
+				unpause();
+				FlxG.sound.play(Paths.sound('scrollMenu'), 0.8);
+			}else{
+				var swagCounter:Int = 0;
 	
-			var swagCounter:Int = 0;
-	
-			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				introAssets.set('default', ['ui/countDown/ready', "ui/countDown/set", "ui/countDown/go"]);
-	
-				var introAlts:Array<String> = introAssets.get('default');
-				var altSuffix:String = "";
-	
-	
-			startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
-			{
-				switch (swagCounter)
-	
+				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
+					introAssets.set('default', ['ui/countDown/ready', "ui/countDown/set", "ui/countDown/go"]);
+		
+					var introAlts:Array<String> = introAssets.get('default');
+					var altSuffix:String = "";
+		
+		
+				startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 				{
-					case 0:
-						FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.6);
-					case 1:
-						var ready:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
-						ready.scrollFactor.set();
-						ready.setGraphicSize(Std.int(ready.width * 0.5));
-	
-						ready.updateHitbox();
-	
-						ready.screenCenter();
-						ready.y -= 120;
-						add(ready);
-						FlxTween.tween(ready, {y: ready.y += 100, alpha: 0}, Conductor.crochet / 1000, {
-							ease: FlxEase.cubeInOut,
-							onComplete: function(twn:FlxTween)
-							{
-								ready.destroy();
-							}
-						});
-						FlxG.sound.play(Paths.sound('intro2' + altSuffix), 0.6);
-					case 2:
-						var set:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
-						set.scrollFactor.set();
-							set.setGraphicSize(Std.int(set.width * 0.5));
-	
-						set.updateHitbox();
-	
-						set.screenCenter();
-						set.y -= 120;
-						add(set);
-						FlxTween.tween(set, {y: set.y += 100, alpha: 0}, Conductor.crochet / 1000, {
-							ease: FlxEase.cubeInOut,
-							onComplete: function(twn:FlxTween)
-							{
-								set.destroy();
-							}
-						});
-						FlxG.sound.play(Paths.sound('intro1' + altSuffix), 0.6);
-					case 3:
-						var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
-						go.scrollFactor.set();
-							go.setGraphicSize(Std.int(go.width * 0.8));
-	
-						go.updateHitbox();
-	
-						go.screenCenter();
-						go.y -= 120;
-						add(go);
-						FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
-							ease: FlxEase.cubeInOut,
-							onComplete: function(twn:FlxTween)
-							{
-								go.destroy();
-							}
-						});
-						FlxG.sound.play(Paths.sound('introGo' + altSuffix), 0.6);
-					case 4:
-						PlayState.instance.tweenManager.active = true;
-						unpause();
-						FlxG.sound.play(Paths.sound('scrollMenu'), 0.8);
-				}
-	
-				swagCounter += 1;
-				// generateSong('fresh');
-			}, 5);
+					switch (swagCounter)
+		
+					{
+						case 0:
+							FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.6);
+						case 1:
+							var ready:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
+							ready.scrollFactor.set();
+							ready.setGraphicSize(Std.int(ready.width * 0.5));
+		
+							ready.updateHitbox();
+		
+							ready.screenCenter();
+							ready.y -= 120;
+							add(ready);
+							FlxTween.tween(ready, {y: ready.y += 100, alpha: 0}, Conductor.crochet / 1000, {
+								ease: FlxEase.cubeInOut,
+								onComplete: function(twn:FlxTween)
+								{
+									ready.destroy();
+								}
+							});
+							FlxG.sound.play(Paths.sound('intro2' + altSuffix), 0.6);
+						case 2:
+							var set:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
+							set.scrollFactor.set();
+								set.setGraphicSize(Std.int(set.width * 0.5));
+		
+							set.updateHitbox();
+		
+							set.screenCenter();
+							set.y -= 120;
+							add(set);
+							FlxTween.tween(set, {y: set.y += 100, alpha: 0}, Conductor.crochet / 1000, {
+								ease: FlxEase.cubeInOut,
+								onComplete: function(twn:FlxTween)
+								{
+									set.destroy();
+								}
+							});
+							FlxG.sound.play(Paths.sound('intro1' + altSuffix), 0.6);
+						case 3:
+							var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
+							go.scrollFactor.set();
+								go.setGraphicSize(Std.int(go.width * 0.8));
+		
+							go.updateHitbox();
+		
+							go.screenCenter();
+							go.y -= 120;
+							add(go);
+							FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
+								ease: FlxEase.cubeInOut,
+								onComplete: function(twn:FlxTween)
+								{
+									go.destroy();
+								}
+							});
+							FlxG.sound.play(Paths.sound('introGo' + altSuffix), 0.6);
+						case 4:
+							PlayState.instance.tweenManager.active = true;
+							unpause();
+							FlxG.sound.play(Paths.sound('scrollMenu'), 0.8);
+					}
+		
+					swagCounter += 1;
+					// generateSong('fresh');
+				}, 5);
+			}
+			
 		}
 	
 }

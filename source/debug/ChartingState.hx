@@ -58,6 +58,7 @@ import openfl.net.FileReference;
 import openfl.utils.ByteArray;
 import openfl.ui.Mouse;
 import cursor.Cursor;
+import title.TitleScreen;
 
 using StringTools;
 
@@ -171,10 +172,27 @@ class ChartingState extends MusicBeatState
 
 	var eventCache:Map<String, BitmapData> = new Map();
 
+	public var artistic:FlxSound;
+
+	override public function onFocus():Void {
+		super.onFocus(); // Ensure the base logic is handled
+		if (artistic != null) artistic.play(); // Resume the music
+	}
+	
+	override public function onFocusLost():Void {
+		super.onFocusLost(); // Ensure the base logic is handled
+		if (artistic != null) artistic.pause(); // Pause the music
+	}		
+
 	override function create()
 	{
 
 		Config.setFramerate(120);
+
+		artistic = new FlxSound().loadEmbedded(Paths.music("chartEditorLoop/chartEditorLoop"));
+		artistic.looped = true; // Enable built-in looping
+		artistic.volume = 1;
+		artistic.play(); // Start the sound
 
 		PlayState.fromChartEditor = true;
 		SaveManager.global();
@@ -1002,6 +1020,7 @@ class ChartingState extends MusicBeatState
 					FlxG.sound.music.pause();
 					vocals.pause();
 					vocalsOther.pause();
+					artistic.volume = 1;
 
 					lilBf.animation.play("idle");
 					lilOpp.animation.play("idle");
@@ -1011,6 +1030,7 @@ class ChartingState extends MusicBeatState
 					vocals.play();
 					vocalsOther.play();
 					FlxG.sound.music.play();
+					artistic.volume = 0;
 
 					lilBf.animation.play("idle");
 					lilOpp.animation.play("idle");
@@ -1263,6 +1283,7 @@ class ChartingState extends MusicBeatState
 		
 			if (FlxG.keys.justPressed.ENTER)
 			{
+				artistic.stop(); 
 				PlayState.SONG = _song;
 				PlayState.EVENTS = _events;
 				FlxG.sound.music.stop();
@@ -1385,6 +1406,8 @@ class ChartingState extends MusicBeatState
 				FlxG.mouse.screenY >= lilBf.y &&
 				FlxG.mouse.screenY <= lilBf.y + lilBf.height &&
 				FlxG.mouse.justPressed){
+
+					artistic.stop(); 
 	
 					autosaveSong();
 
